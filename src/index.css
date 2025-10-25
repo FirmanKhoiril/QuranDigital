@@ -9,7 +9,7 @@
 }
 
 .logo {
-  @apply text-primary font-bold  font-logo;
+  @apply font-bold  font-logo bg-gradient-to-r from-[#ffb347] via-[#ee913d] to-[#ff6a00] text-transparent bg-clip-text;
 }
 
 .link__hover {

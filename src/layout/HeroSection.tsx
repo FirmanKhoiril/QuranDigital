@@ -1,18 +1,142 @@
-import { Box, Typography } from "@mui/material";
-import Read from "../images/read.svg";
-import { useNavigate } from "react-router-dom";
+import { Box, Typography, Card, CardContent } from "@mui/material";
+import { BookOpen, Volume2, Lightbulb, Gamepad2 } from "lucide-react";
+
+const features = [
+  {
+    title: "Baca Al-Quran",
+    desc: "Teks Arab, transliterasi, dan terjemahan bahasa Indonesia",
+    icon: <BookOpen className="w-8 h-8 text-green-500" />,
+  },
+  {
+    title: "Audio Berkualitas",
+    desc: "Mendengarkan dengan audio dari qari terbaik dunia",
+    icon: <Volume2 className="w-8 h-8 text-blue-500" />,
+  },
+  {
+    title: "Tafsir Lengkap",
+    desc: "Memahami makna dengan tafsir yang mudah dipahami",
+    icon: <Lightbulb className="w-8 h-8 text-amber-500" />,
+  },
+  {
+    title: "Game Edukatif",
+    desc: "Belajar Al-Quran dengan cara yang menyenangkan",
+    icon: <Gamepad2 className="w-8 h-8 text-emerald-500" />,
+  },
+];
 
 const HeroSection = () => {
-  const navigate = useNavigate();
   return (
-    <Box sx={{ minHeight: 500, my: 10, display: "flex", flexDirection: { xs: "column", lg: "row-reverse" }, justifyContent: "space-around", alignItems: "center", gap: 10 }}>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, sm: 2 } }}>
+    <Box
+      sx={{
+        minHeight: 200,
+        my: 10,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+        gap: 8,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: { xs: 1, sm: 2 },
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h4">
-          <span className=" text-[40px] sm:text-[57px] font-bold tracking-wide cursor-default text-[#ee913d]">Al Quran Digital Bahasa Indonesia</span>
+          <span
+            className="text-[32px] sm:text-[57px] font-semibold font-quicksand tracking-wide cursor-default 
+            bg-gradient-to-r from-[#ffb347] via-[#ee913d] to-[#ff6a00] 
+            text-transparent bg-clip-text"
+          >
+            Al Quran Digital Bahasa Indonesia
+          </span>
         </Typography>
         <Typography variant="h5">
-          <span className=" font-primary text-xl">Baca, dengarkan, dan pelajari Al-Quran dengan terjemahan bahasa Indonesia, audio berkualitas tinggi, dan tafsir yang lengkap</span>
+          <span className="text-base sm:text-xl font-thin text-center font-quicksand text-slate-400/90">
+            Baca, dengarkan, dan pelajari Al-Quran dengan terjemahan bahasa
+            Indonesia,<br className="md:block hidden" />
+            audio berkualitas tinggi, dan tafsir yang lengkap
+          </span>
         </Typography>
+      </Box>
+
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(4, 1fr)",
+          },
+          gap: 3,
+          width: "100%",
+          maxWidth: 1000,
+          justifyItems: "center",
+        }}
+      >
+        {features.map((item, index) => (
+          <Card
+            key={index}
+            sx={{
+              backgroundColor: "#111",
+              border: "1px solid #333",
+              borderRadius: "16px",
+              width: "100%",
+              maxWidth: 220,
+              textAlign: "center",
+              transition: "0.3s",
+              "&:hover": {
+                borderColor: "#ee913d",
+                transform: "translateY(-6px)",
+              },
+            }}
+          >
+            <CardContent>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 1.5,
+                }}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: "rgba(255,255,255,0.05)",
+                    borderRadius: "50%",
+                    width: 60,
+                    height: 60,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    mb: 1,
+                  }}
+                >
+                  {item.icon}
+                </Box>
+                <Typography
+                  variant="h6"
+                  className="font-quicksand text-white"
+                  sx={{ fontSize: "1rem", fontWeight: 600 }}
+                >
+                  {item.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className="font-quicksand font-thin text-slate-400/80"
+                  sx={{ fontSize: "0.85rem" }}
+                >
+                  {item.desc}
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
       </Box>
     </Box>
   );

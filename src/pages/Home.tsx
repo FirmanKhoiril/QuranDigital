@@ -1,34 +1,75 @@
 import { useQuery } from "react-query";
 import { Hero } from "../layout";
-import { Loading, Error } from "../components";
+import { Loading, Error, QuranCard, QuranSearch } from "../components";
 import { Box, Typography } from "@mui/material";
-
 import { fetchEQuran } from "../api/FetchEQuran";
+import { Surah } from "../types/quran";
+import { useState, useEffect } from "react";
 
 const Home = () => {
+  const [filtered, setFiltered] = useState<Surah[]>([]);
+  const [query, setQuery] = useState("");
 
-  const { data: surah,  isError, isFetching, isLoading, isSuccess } = useQuery(["surah"], fetchEQuran, {
+  const {
+    data: surah,
+    isError,
+    isFetching,
+    isLoading,
+    isSuccess,
+  } = useQuery<{ data: Surah[] }>(["surah"], fetchEQuran, {
     refetchOnWindowFocus: false,
     staleTime: 60 * (10 * 60),
     refetchInterval: 60 * (10 * 60),
   });
 
+  useEffect(() => {
+    if (surah?.data) {
+      setFiltered(surah.data);
+    }
+  }, [surah]);
+
   return (
     <>
       <Hero />
+      <QuranSearch allSurahs={surah?.data || []} onFilter={setFiltered} setQuery={setQuery} query={query} />
 
       {isError && <Error />}
-      {isFetching && isLoading ? (
+      {isFetching || isLoading ? (
         <Loading />
       ) : (
         isSuccess && (
-          <Box sx={{ my: 2, display: "flex", flexDirection: "column", gap: 1 }}>
-            {surah.data.map((surat) => {
-              console.log(surat)
-              return (
-                <div className="" key={1}>Test</div>
-              )
-            })}
+          <Box
+            sx={{
+              my: 6,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 4,
+            }}
+          >
+           {query.length === 0 && (
+             <Typography variant="h4" className="text-white font-semibold">
+              <span className="font-quicksand font-semibold">114 Surat Al-Quran</span>
+            </Typography>
+           )}
+
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "1fr 1fr",
+                  lg: "1fr 1fr 1fr",
+                },
+                gap: 3,
+                width: "100%",
+                maxWidth: 1200,
+              }}
+            >
+              {filtered.map((surat) => (
+                <QuranCard key={surat.nomor} {...surat} />
+              ))}
+            </Box>
           </Box>
         )
       )}

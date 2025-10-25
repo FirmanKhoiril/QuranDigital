@@ -1,15 +1,16 @@
 import { Box, Typography } from "@mui/material";
+import { HeartIcon } from "lucide-react";
 
 const Footer = () => {
   return (
-    <Box sx={{ minHeight: 200, display: "flex", justifyContent: "space-around", flexDirection: { xs: "column", md: "row", overflow: "hidden" } }}>
-      <Typography sx={{ width: 600 }}>
-        @Copyright All Rights Reserved. <span className=" text-primary">Firman.K.R</span>
+    <Box sx={{ minHeight: 200, display: "flex", justifyContent: "space-around", flexDirection: { xs: "column", md: "row-reverse", overflow: "hidden" }, marginTop: 10 }}>
+      <Typography>
+        <span className="font-quicksand">©2025 QuranHub.vercel.app All rights reserved.</span>
       </Typography>
       <Typography>
-        <span className=" text-white/50 cursor-default text-[13px]">
+        <span className=" text-white/50 flex items-center gap-4 cursor-default text-[13px] font-quicksand">
           {" "}
-          Saya menggunakan layanan pihak ketiga untuk menyediakan fitur tertentu pada situs web kami. Dalam penggunaan layanan ini, kami tidak dapat mengontrol segala jenis informasi yang dikumpulkan oleh pihak ketiga/API.
+          Made by Firman from Indonesia with<HeartIcon color="red" />
         </span>
       </Typography>
     </Box>

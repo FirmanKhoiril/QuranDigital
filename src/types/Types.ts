@@ -1,3 +1,5 @@
+import { Surah } from "./quran";
+
 export interface IIndexOfSurat {
   surat: {
     id: number;
@@ -55,3 +57,10 @@ export type TSurah = {
   description: string;
   verses: TIndexOfSurat;
 };
+
+export interface QuranSearchProps {
+  allSurahs: Surah[];
+  onFilter: (filtered: Surah[]) => void;
+  query: string;
+  setQuery: (query: string) => void;
+}
