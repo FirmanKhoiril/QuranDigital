@@ -7,11 +7,17 @@ const StateContext = createContext<TContextProps>({
   searchTerm: "",
   indexSurat: 1,
   verseDetail: {},
+  showTafsir: false,
+  tafsirAyat: 0,
+  paramAyatSurat: "",
+  setShowTafsir: () => {},
+  setTafsirAyat: () => {},
   setVerseDetail: () => {},
   setVerse: () => {},
   setToogle: () => {},
   setIndexSurat: () => {},
   setSearchTerm: () => {},
+  setParamAyatSurat: () => {}
 });
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -20,7 +26,10 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
   const [verseDetail, setVerseDetail] = useState<object>({});
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [indexSurat, setIndexSurat] = useState<number>(1);
-  return <StateContext.Provider value={{ toogle, verse, searchTerm, indexSurat, verseDetail, setVerseDetail, setVerse, setToogle, setIndexSurat, setSearchTerm }}>{children}</StateContext.Provider>;
+  const [showTafsir, setShowTafsir] = useState(false)
+  const [tafsirAyat, setTafsirAyat] = useState(0)
+  const [paramAyatSurat, setParamAyatSurat] = useState("")
+  return <StateContext.Provider value={{ toogle, verse, searchTerm, showTafsir, tafsirAyat, indexSurat, verseDetail, paramAyatSurat, setParamAyatSurat, setShowTafsir, setTafsirAyat, setVerseDetail, setVerse, setToogle, setIndexSurat, setSearchTerm }}>{children}</StateContext.Provider>;
 };
 
-export const useGlobalContext: any = (): TContextProps => useContext(StateContext);
+export const useGlobalContext = (): TContextProps => useContext(StateContext);

@@ -33,11 +33,17 @@ export type TContextProps = {
   searchTerm: string;
   indexSurat: number;
   verseDetail: object | any;
+  showTafsir: boolean;
+  tafsirAyat: number;
+  paramAyatSurat: string;
+  setTafsirAyat: React.Dispatch<React.SetStateAction<number>>;
   setVerseDetail: React.Dispatch<React.SetStateAction<object | any>>;
   setVerse: React.Dispatch<React.SetStateAction<object>>;
   setToogle: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowTafsir: React.Dispatch<React.SetStateAction<boolean>>;
   setIndexSurat: React.Dispatch<React.SetStateAction<number>>;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  setParamAyatSurat: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export interface IOptions {

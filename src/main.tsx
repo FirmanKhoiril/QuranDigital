@@ -6,6 +6,8 @@ import "./index.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ContextProvider } from "./utils/ContextAPI.tsx";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./utils/theme.ts";
 const client = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -13,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ContextProvider>
       <BrowserRouter>
         <QueryClientProvider client={client}>
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
           <ReactQueryDevtools />
         </QueryClientProvider>
       </BrowserRouter>
