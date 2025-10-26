@@ -39,6 +39,7 @@ export default function QuranDetails() {
   const [selectedAyat, setSelectedAyat] = useState("Semua");
   const [selectedQari, setSelectedQari] = useState(qaris[0]);
   const [playingAyat, setPlayingAyat] = useState<number | null>(null);
+  const [playingFullAudio, setPlayingFullAudio] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function QuranDetails() {
       audioRef.current = null;
     }
     setPlayingAyat(null);
+    setPlayingFullAudio(false);
   }, [selectedQari]);
 
   const handlePlayPause = (ayatNumber: number, audioUrl: string) => {
@@ -66,9 +68,33 @@ export default function QuranDetails() {
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
     setPlayingAyat(ayatNumber);
+    setPlayingFullAudio(false);
     audio.play();
 
     audio.onended = () => setPlayingAyat(null);
+  };
+
+  const handleFullPlayPause = (audioUrl: string) => {
+    if (!audioUrl) return;
+
+    if (playingFullAudio) {
+      audioRef.current?.pause();
+      setPlayingFullAudio(false);
+      return;
+    }
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+    setPlayingAyat(null);
+    setPlayingFullAudio(true);
+    audio.play();
+
+    audio.onended = () => setPlayingFullAudio(false);
   };
 
   const {
@@ -245,7 +271,9 @@ export default function QuranDetails() {
                 </Box>
                 <Button
                   variant="outlined"
-                  startIcon={<Play size={18} />}
+                  startIcon={
+                    playingFullAudio ? <Pause size={18} /> : <Play size={18} />
+                  }
                   sx={{
                     color: "#ee913d",
                     borderColor: "#ee913d",
@@ -259,10 +287,10 @@ export default function QuranDetails() {
                     },
                   }}
                   onClick={() =>
-                    new Audio(detail.audioFull[selectedQari.key]).play()
+                    handleFullPlayPause(detail.audioFull[selectedQari.key])
                   }
                 >
-                  Putar Full Audio
+                  {playingFullAudio ? "Hentikan Audio" : "Putar Full Audio"}
                 </Button>
               </Box>
             </Box>
@@ -275,7 +303,7 @@ export default function QuranDetails() {
                 textAlign: "right",
               }}
             >
-              {detail.nama}
+              <span className="font-arab">{detail.nama}</span>
             </Typography>
           </Box>
 
@@ -513,7 +541,7 @@ export default function QuranDetails() {
                   fontFamily: "Scheherazade New, serif",
                 }}
               >
-                {a.teksArab}
+                <span className="font-arab">{a.teksArab}</span>
               </Typography>
             </Box>
             {showTransliteration && (

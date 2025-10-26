@@ -107,7 +107,9 @@ const QuranCard = ({
               fontSize: "1.8rem",
             }}
           >
-            {nama}
+            <span className="font-arab">
+              {nama}
+            </span>
           </Typography>
         </CardContent>
       </Link>

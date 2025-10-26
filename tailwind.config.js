@@ -7,9 +7,11 @@ export default {
         logo: ["Permanent Marker", "cursive"],
         primary: ["Open Sans", "sans-serif"],
         quicksand: ["Quicksand", "sans-serif"],
+        arab: ['Amiri Quran', "serif"]
       },
       textColor: {
         primary: "#ee913d",
+        
       },
     },
   },
