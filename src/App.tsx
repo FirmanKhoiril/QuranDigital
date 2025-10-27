@@ -5,7 +5,7 @@ import { Footer, Navbar } from "./layout";
 
 function App() {
   return (
-    <div className=" dark:bg-[#0c0c0c] text-white/90 relative min-h-screen px-4 bg-slate-100">
+    <div className=" dark:bg-[#0c0c0c] text-white/90 relative min-h-screen px-2 sm:px-4 bg-slate-100">
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route path="/" index element={<Home />} />
