@@ -37,8 +37,6 @@ const Tafsir = () => {
   );
 
   if (!shouldFetch) return null;
-  if (isLoading || isFetching) return <Loading />;
-  if (isError) return <Error />;
 
   const tafsir = surah?.data?.tafsir?.find((t) => t.ayat === tafsirAyat);
   if (!tafsir) return null;
@@ -54,6 +52,8 @@ const Tafsir = () => {
       className="fixed inset-0 flex items-center justify-center z-50 p-4 bg-black/60 backdrop-blur-sm"
       onClick={closeTafsirModal}
     >
+      {isLoading || isFetching && <Loading /> }
+      {isError && <Error />}
       <div
         onClick={(e) => e.stopPropagation()}
         className="bg-[#0c0c0c] rounded-2xl max-w-3xl w-full p-6 text-white overflow-y-auto max-h-[90vh] relative shadow-lg border border-zinc-800"

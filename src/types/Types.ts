@@ -30,21 +30,24 @@ export type TVerses = {
 export type TContextProps = {
   toogle: boolean;
   verse: object;
+  verseDetail: object;
   searchTerm: string;
   indexSurat: number;
-  verseDetail: object | any;
   showTafsir: boolean;
   tafsirAyat: number;
   paramAyatSurat: string;
-  setTafsirAyat: React.Dispatch<React.SetStateAction<number>>;
-  setVerseDetail: React.Dispatch<React.SetStateAction<object | any>>;
-  setVerse: React.Dispatch<React.SetStateAction<object>>;
-  setToogle: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowTafsir: React.Dispatch<React.SetStateAction<boolean>>;
-  setIndexSurat: React.Dispatch<React.SetStateAction<number>>;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  setParamAyatSurat: React.Dispatch<React.SetStateAction<string>>;
+  mode: "light" | "dark";
+  setMode: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+  setShowTafsir: (prev: boolean) => void;
+  setTafsirAyat: (v: number) => void;
+  setVerseDetail: (v: object) => void;
+  setVerse: (v: object) => void;
+  setToogle: (v: boolean) => void;
+  setIndexSurat: (v: number) => void;
+  setSearchTerm: (v: string) => void;
+  setParamAyatSurat: (v: string) => void;
 };
+
 
 export interface IOptions {
   headers: {

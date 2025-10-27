@@ -1,28 +1,5 @@
 import { Box, Typography, Card, CardContent } from "@mui/material";
-import { BookOpen, Volume2, Lightbulb, Gamepad2 } from "lucide-react";
-
-const features = [
-  {
-    title: "Baca Al-Quran",
-    desc: "Teks Arab, transliterasi, dan terjemahan bahasa Indonesia",
-    icon: <BookOpen className="w-8 h-8 text-green-500" />,
-  },
-  {
-    title: "Audio Berkualitas",
-    desc: "Mendengarkan dengan audio dari qari terbaik dunia",
-    icon: <Volume2 className="w-8 h-8 text-blue-500" />,
-  },
-  {
-    title: "Tafsir Lengkap",
-    desc: "Memahami makna dengan tafsir yang mudah dipahami",
-    icon: <Lightbulb className="w-8 h-8 text-amber-500" />,
-  },
-  {
-    title: "Game Edukatif",
-    desc: "Belajar Al-Quran dengan cara yang menyenangkan",
-    icon: <Gamepad2 className="w-8 h-8 text-emerald-500" />,
-  },
-];
+import { features } from "../utils/DummyData";
 
 const HeroSection = () => {
   return (
@@ -57,12 +34,12 @@ const HeroSection = () => {
         <Typography variant="h5">
           <span className="text-base sm:text-xl font-thin text-center font-quicksand text-slate-400/90">
             Baca, dengarkan, dan pelajari Al-Quran dengan terjemahan bahasa
-            Indonesia,<br className="md:block hidden" />
+            Indonesia,
+            <br className="md:block hidden" />
             audio berkualitas tinggi, dan tafsir yang lengkap
           </span>
         </Typography>
       </Box>
-
 
       <Box
         sx={{
@@ -83,17 +60,12 @@ const HeroSection = () => {
           <Card
             key={index}
             sx={{
+              borderRadius: "16px",
               backgroundColor: "#111",
               border: "1px solid #333",
-              borderRadius: "16px",
               width: "100%",
-              maxWidth: 220,
+              maxWidth: { xs: "100%", sm: 220 },
               textAlign: "center",
-              transition: "0.3s",
-              "&:hover": {
-                borderColor: "#ee913d",
-                transform: "translateY(-6px)",
-              },
             }}
           >
             <CardContent>

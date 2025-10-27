@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { Hero } from "../layout";
 import { Loading, Error, QuranCard, QuranSearch } from "../components";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Pagination } from "@mui/material";
 import { fetchEQuran } from "../api/FetchEQuran";
 import { Surah } from "../types/quran";
 import { useState, useEffect } from "react";
@@ -9,6 +9,9 @@ import { useState, useEffect } from "react";
 const Home = () => {
   const [filtered, setFiltered] = useState<Surah[]>([]);
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 15;
+
 
   const {
     data: surah,
@@ -28,10 +31,29 @@ const Home = () => {
     }
   }, [surah]);
 
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentSurahs = filtered.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [query]);
+
   return (
     <>
       <Hero />
-      <QuranSearch allSurahs={surah?.data || []} onFilter={setFiltered} setQuery={setQuery} query={query} />
+      <QuranSearch
+        allSurahs={surah?.data || []}
+        onFilter={setFiltered}
+        setQuery={setQuery}
+        query={query}
+      />
 
       {isError && <Error />}
       {isFetching || isLoading ? (
@@ -47,11 +69,13 @@ const Home = () => {
               gap: 4,
             }}
           >
-           {query.length === 0 && (
-             <Typography variant="h4" className="text-white font-semibold">
-              <span className="font-quicksand font-semibold">114 Surat Al-Quran</span>
-            </Typography>
-           )}
+            {query.length === 0 && (
+              <Typography variant="h4" className="text-white font-semibold">
+                <span className="font-quicksand font-semibold">
+                  114 Surat Al-Quran
+                </span>
+              </Typography>
+            )}
 
             <Box
               sx={{
@@ -63,13 +87,33 @@ const Home = () => {
                 },
                 gap: 3,
                 width: "100%",
-                maxWidth: 1200,
+                maxWidth: 1500,
               }}
             >
-              {filtered.map((surat) => (
+              {currentSurahs.map((surat) => (
                 <QuranCard key={surat.nomor} {...surat} />
               ))}
             </Box>
+
+            {filtered.length > itemsPerPage && (
+              <Pagination
+                count={totalPages}
+                page={page}
+                onChange={handlePageChange}
+                color="primary"
+                sx={{
+                  mt: 4,
+                  "& .MuiPaginationItem-root": {
+                    color: "#fff",
+                    borderColor: "#555",
+                  },
+                  "& .Mui-selected": {
+                    backgroundColor: "#ee913d !important",
+                    color: "#000 !important",
+                  },
+                }}
+              />
+            )}
           </Box>
         )
       )}

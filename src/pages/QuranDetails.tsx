@@ -32,7 +32,7 @@ import { useGlobalContext } from "../utils/ContextAPI";
 
 export default function QuranDetails() {
   const { id } = useParams<{ id: string }>();
-  const { setShowTafsir, setTafsirAyat, setParamAyatSurat } =
+  const { setShowTafsir, setTafsirAyat, setParamAyatSurat, showTafsir } =
     useGlobalContext();
   const [showTransliteration, setShowTransliteration] = useState(true);
   const [showTranslation, setShowTranslation] = useState(true);
@@ -50,6 +50,10 @@ export default function QuranDetails() {
     setPlayingAyat(null);
     setPlayingFullAudio(false);
   }, [selectedQari]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handlePlayPause = (ayatNumber: number, audioUrl: string) => {
     if (!audioUrl) return;
@@ -140,7 +144,7 @@ export default function QuranDetails() {
   };
 
   const handleTafsir = ({ ayat, arab }: TTafsirParams) => {
-    setShowTafsir((prev) => !prev);
+    setShowTafsir(!showTafsir);
     setTafsirAyat(ayat);
     setParamAyatSurat(arab);
   };
@@ -151,6 +155,9 @@ export default function QuranDetails() {
         bgcolor: "#0d0d0d",
         color: "white",
         minHeight: "100vh",
+        width: "100%",
+        maxWidth: 1500,
+        margin: "auto",
         p: 3,
         fontFamily: "'Quicksand', sans-serif",
       }}
@@ -195,7 +202,7 @@ export default function QuranDetails() {
             p: 4,
             mb: 4,
             boxShadow: "0 0 15px rgba(238,145,61,0.1)",
-            borderLeft: "8px solid rgba(238,145,61,0.7)",
+            borderLeft: "4px solid rgba(238,145,61,0.7)",
           }}
         >
           <Box
@@ -241,7 +248,7 @@ export default function QuranDetails() {
                 </Box>
               </Box>
 
-              <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+              <Box sx={{ display: "flex", gap: 2, mt: 2, flexWrap: "wrap" }}>
                 <Box
                   sx={{
                     display: "flex",
@@ -257,6 +264,7 @@ export default function QuranDetails() {
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.10)",
                       color: "#ccc",
+                      fontSize: { xs: 12, sm: 14 },
                     }}
                   />
                   <Chip
@@ -266,6 +274,7 @@ export default function QuranDetails() {
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.08)",
                       color: "#ccc",
+                      fontSize: { xs: 12, sm: 14 },
                     }}
                   />
                 </Box>
@@ -329,70 +338,107 @@ export default function QuranDetails() {
           gap: 2,
         }}
       >
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <Select
-            size="small"
-            value={selectedAyat}
-            onChange={(e) => setSelectedAyat(e.target.value)}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
+          <Box
             sx={{
-              color: "white",
-              minWidth: 120,
-              bgcolor: "#1a1a1a",
-              borderRadius: "8px",
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#444",
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#888",
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#ee913d",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#fff",
-              },
-              "& .MuiSelect-select": {
-                padding: "6px 32px 6px 10px",
-              },
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              flexWrap: "wrap",
             }}
           >
-            <MenuItem value="Semua">Semua</MenuItem>
-            {detail?.ayat.map((a) => (
-              <MenuItem key={a.nomorAyat} value={`Ayat ${a.nomorAyat}`}>
-                Ayat {a.nomorAyat}
-              </MenuItem>
-            ))}
-          </Select>
+            <Typography
+              variant="body2"
+              sx={{ color: "#ccc", fontWeight: 500, minWidth: 50 }}
+            >
+              Surat:
+            </Typography>
+            <Select
+              size="small"
+              value={selectedAyat}
+              onChange={(e) => setSelectedAyat(e.target.value)}
+              sx={{
+                color: "white",
+                minWidth: 120,
+                bgcolor: "#1a1a1a",
+                borderRadius: "8px",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#444",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#888",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ee913d",
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "#fff",
+                },
+                "& .MuiSelect-select": {
+                  padding: "6px 32px 6px 10px",
+                },
+              }}
+            >
+              <MenuItem value="Semua">Semua</MenuItem>
+              {detail?.ayat.map((a) => (
+                <MenuItem key={a.nomorAyat} value={`Ayat ${a.nomorAyat}`}>
+                  Ayat {a.nomorAyat}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
 
-          <Select
-            size="small"
-            value={selectedQari.name}
-            onChange={(e) => {
-              const qari = qaris.find((q) => q.name === e.target.value);
-              if (qari) setSelectedQari(qari);
-            }}
+          <Box
             sx={{
-              color: "white",
-              minWidth: 200,
-              bgcolor: "#1a1a1a",
-              borderRadius: "8px",
-              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#444" },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#888",
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#ee913d",
-              },
-              "& .MuiSvgIcon-root": { color: "#fff" },
-              "& .MuiSelect-select": { padding: "6px 32px 6px 10px" },
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              flexWrap: "wrap",
             }}
           >
-            {qaris.map((q) => (
-              <MenuItem key={q.key} value={q.name}>
-                {q.name}
-              </MenuItem>
-            ))}
-          </Select>
+            <Typography
+              variant="body2"
+              sx={{ color: "#ccc", fontWeight: 500, minWidth: 40 }}
+            >
+              Qari:
+            </Typography>
+            <Select
+              size="small"
+              value={selectedQari.name}
+              onChange={(e) => {
+                const qari = qaris.find((q) => q.name === e.target.value);
+                if (qari) setSelectedQari(qari);
+              }}
+              sx={{
+                color: "white",
+                minWidth: 200,
+                bgcolor: "#1a1a1a",
+                borderRadius: "8px",
+                "& .MuiOutlinedInput-notchedOutline": { borderColor: "#444" },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#888",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ee913d",
+                },
+                "& .MuiSvgIcon-root": { color: "#fff" },
+                "& .MuiSelect-select": { padding: "6px 32px 6px 10px" },
+              }}
+            >
+              {qaris.map((q) => (
+                <MenuItem key={q.key} value={q.name}>
+                  {q.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -451,6 +497,7 @@ export default function QuranDetails() {
               flexDirection: "column",
               gap: 2,
               boxShadow: "0 0 10px rgba(238,145,61,0.08)",
+              borderLeft: "4px solid rgba(186, 196, 200,0.2)",
             }}
           >
             <Box
@@ -466,11 +513,11 @@ export default function QuranDetails() {
                   fontWeight: 600,
                   border: "2px solid #ee913d",
                   borderRadius: "50%",
-                  width: 50,
-                  height: 50,
-                  padding: 0.7,
+                  width: { xs: 35, sm: 50 },
+                  height: { xs: 35, sm: 50 },
+                  padding: { xs: 0, sm: 0.7 },
                   textAlign: "center",
-                  lineHeight: "35px",
+                  lineHeight: { xs: "30px", sm: "35px" },
                 }}
               >
                 {a.nomorAyat}
@@ -482,8 +529,8 @@ export default function QuranDetails() {
                     handlePlayPause(a.nomorAyat, a.audio[selectedQari.key])
                   }
                   sx={{
-                    width: 40,
-                    height: 40,
+                    width: { xs: 30, sm: 40 },
+                    height: { xs: 30, sm: 40 },
                     border: "1px solid #ee913d",
                     borderRadius: "50%",
                     color: "#ee913d",

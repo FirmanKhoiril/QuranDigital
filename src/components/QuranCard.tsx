@@ -26,6 +26,7 @@ const QuranCard = ({
         "&:hover": {
           borderColor: "#ee913d",
           transform: "translateY(-6px)",
+          backgroundColor: "rgba(93, 57, 24, 0.2)"
         },
       }}
     >
@@ -65,7 +66,7 @@ const QuranCard = ({
             <Box>
               <Typography variant="h6" className="text-white font-semibold">
                 <span className="font-quicksand ">{namaLatin} </span>
-                <span className="text-slate-400 font-quicksand text-sm font-normal">
+                <span className="text-slate-400 font-quicksand text-xs sm:text-sm font-normal">
                   ({arti})
                 </span>
               </Typography>
@@ -85,6 +86,7 @@ const QuranCard = ({
                   sx={{
                     backgroundColor: "rgba(255,255,255,0.10)",
                     color: "#ccc",
+                    fontSize: { xs: 12, sm: 14}
                   }}
                 />
                 <Chip
@@ -94,6 +96,7 @@ const QuranCard = ({
                   sx={{
                     backgroundColor: "rgba(255,255,255,0.08)",
                     color: "#ccc",
+                    fontSize: { xs: 12, sm: 14}
                   }}
                 />
               </Box>

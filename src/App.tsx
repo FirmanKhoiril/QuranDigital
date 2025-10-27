@@ -1,13 +1,11 @@
 import "./App.css";
-import { Box, Container } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import {  Home, QuranDetails } from "./pages";
 import { Footer, Navbar } from "./layout";
 
 function App() {
   return (
-    <Box sx={{ bgcolor: "#0c0c0c", color: "whitesmoke", position: "relative", minHeight: "100vh" }}>
-      <Container>
+    <div className=" dark:bg-[#0c0c0c] text-white/90 relative min-h-screen px-4 bg-slate-100">
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route path="/" index element={<Home />} />
@@ -15,8 +13,7 @@ function App() {
           </Route>
         </Routes>
         <Footer />
-      </Container>
-    </Box>
+    </div>
   );
 }
 
