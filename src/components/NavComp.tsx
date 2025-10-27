@@ -27,6 +27,7 @@ const NavComp = () => {
             letterSpacing: "0.10rem",
             display: "flex",
             gap: 1.5,
+            fontSize: {xs: 16, sm: 20},
             alignItems: "center",
             backgroundColor: "rgba(238, 145, 61, 0.04)",
             padding: 1,
