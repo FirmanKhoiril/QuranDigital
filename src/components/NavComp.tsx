@@ -29,9 +29,6 @@ const NavComp = () => {
             gap: 1.5,
             fontSize: {xs: 20, sm: 26},
             alignItems: "center",
-            backgroundColor: "rgba(238, 145, 61, 0.04)",
-            padding: 1,
-            borderRadius: 2,
           }}
         >
           <IoBookOutline color="#ee913d" />
