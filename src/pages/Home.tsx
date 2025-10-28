@@ -107,6 +107,9 @@ const Home = () => {
                     color: "#fff",
                     borderColor: "#555",
                   },
+                  "& .MuiPagination-ul": {
+                    gap: "6px",
+                  },
                   "& .Mui-selected": {
                     backgroundColor: "#ee913d !important",
                     color: "#000 !important",
